@@ -1,8 +1,4 @@
-/**
- * Default `en`
- * Error validation responses you can use this file as a template
- * for other languages 
- * 
+/** 
  * Use:
  * %name% for the input name
  * %value% for the input value 
