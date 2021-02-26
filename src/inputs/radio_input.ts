@@ -13,7 +13,7 @@ interface Attributes {
   required?: boolean
 }
 
-class PasswordInput {
+class RadioInput {
   value: string;
   attributes: Attributes;
   constructor(v: string, a: Attributes) {
@@ -22,8 +22,8 @@ class PasswordInput {
   }
 
   render(attr: string) {
-    return `<input type="text" ${attr} value="${this.value}">`;
+    return `<input type="radio" ${attr} value="${this.value}">`;
   }
 }
 
-export { PasswordInput }
+export { RadioInput }

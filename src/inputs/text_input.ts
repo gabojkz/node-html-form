@@ -21,18 +21,8 @@ class TextInput {
     this.attributes = a;
   }
 
-  build():string {
-    return Object.keys(this.attributes).map((key: string) => {
-      const val: any = (this.attributes as any)[key];
-      
-      if(key === 'required') return val ? "required" : "";
 
-      return `${key}="${val}"`;
-    }).join(' ');
-  }
-
-  render() {
-    const attr: string = this.build();
+  render(attr: string) {
     return `<input type="text" ${attr} value="${this.value}">`;
   }
 }

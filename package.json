@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npx tsc -w",
     "test": "find src/tests -name '*.test.ts' | xargs mocha -r ts-node/register",
-    "test:w": "mocha -w -r ts-node/register src/tests/**/*.test.ts",
+    "test:w": "mocha --require ts-node/register --extensions ts,tsx --watch --watch-files src 'src/tests/**/*.{ts,tsx}' ",
     "coverage": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test"
   },
   "author": "gabriel zapata",

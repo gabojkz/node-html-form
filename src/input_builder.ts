@@ -1,11 +1,16 @@
 class InputBuilder {
-  constructor(input) {
-    
+  input: { attributes: {}, };
+  constructor(input: { attributes: {} }) {
+    this.input = input;
   }
 
-  build():string {
-    return Object.keys(this.attributes).map((key: string) => {
-      const val: any = (this.attributes as any)[key];
+  buildLabel() {
+
+  }
+
+  buildInput():string {
+    return Object.keys(this.input.attributes).map((key: string) => {
+      const val: any = (this.input.attributes as any)[key];
       
       if(key === 'required') return val ? "required" : "";
 

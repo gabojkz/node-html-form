@@ -1,5 +1,6 @@
 declare class NodeForm {
-    constructor();
+    formStructure: object;
+    constructor(formStructure: object);
     render(): void;
 }
 export { NodeForm };

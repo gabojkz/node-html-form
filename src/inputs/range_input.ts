@@ -13,7 +13,7 @@ interface Attributes {
   required?: boolean
 }
 
-class PasswordInput {
+class CheckboxInput {
   value: string;
   attributes: Attributes;
   constructor(v: string, a: Attributes) {
@@ -22,8 +22,8 @@ class PasswordInput {
   }
 
   render(attr: string) {
-    return `<input type="text" ${attr} value="${this.value}">`;
+    return `<input type="range" min="5" max="10" step="0.01" >`;
   }
 }
 
-export { PasswordInput }
+export { CheckboxInput }
