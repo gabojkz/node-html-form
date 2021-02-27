@@ -1,6 +1,31 @@
+export = NodeForm;
+/**
+ * @typedef {object} FormStructure
+ * @type {Object.<[key: string], InputNode>}
+ */
+/**
+ * @typedef {object} InputNode
+ * @property {string} type
+ * @property {[]} classes - array of classes
+ */
+/**
+ * Main class
+ */
 declare class NodeForm {
-    formStructure: object;
-    constructor(formStructure: object);
-    render(): void;
+    /**
+     * @param {FormStructure} formStructure
+     */
+    constructor(formStructure: FormStructure);
+    formStructure: any;
 }
-export { NodeForm };
+declare namespace NodeForm {
+    export { FormStructure, InputNode };
+}
+type FormStructure = any;
+type InputNode = {
+    type: string;
+    /**
+     * - array of classes
+     */
+    classes: [];
+};

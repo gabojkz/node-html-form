@@ -1,18 +1,18 @@
-const Input = require('./Input')
-const validator = require('../Validations')
-const locale = require('../../config/locale')
+const Input = require('./Input');
+const validator = require('../Validations');
+const locale = require('../../config/locale');
 const {generateMassage} = require('../Utils');
 const {FormValidationError} = require('../Exceptions');
 
 function InputText(value, validations, htmlAttributes) {
-  Input.call(this, ...arguments)
+  Input.call(this, ...arguments);
 }
 
 InputText.prototype = new Input();
 InputText.prototype.constructor = InputText;
 
 InputText.prototype.build = function() {
-  var input = '<input type="text" ';
+  let input = '<input type="text" ';
 
   input += this.stringifyAttributes();
 
@@ -20,6 +20,6 @@ InputText.prototype.build = function() {
   input += '/>';
 
   return input;
-}
+};
 
 module.exports = InputText;
