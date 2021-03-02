@@ -13,13 +13,15 @@ class Label {
    * @property {Array.<string>} htmlAttrs
    */
   constructor(input, structure) {
+    this.input = input;
+
     const plainLabel = structure.label || {};
 
+    this._text = plainLabel.text;
     this.class = plainLabel.classes;
     this.id = plainLabel.id;
-    this.input = input;
-    this._text = plainLabel.text;
     this.for = plainLabel.for || structure.id;
+    this.wrap = plainLabel.wrap || false;
     this.htmlAttrs = ['for', 'class', 'id'];
   }
 
@@ -42,10 +44,31 @@ class Label {
    * tag html element
    */
   get tag() {
-    const attr = new AttributeBuilder(this);
+    return '<label' + this.attrs() + '>' + this.text + '</label>';
+  }
 
-    console.log(attr.build());
-    return '<label' + attr.build() + '>' + this.text + '</label>';
+  /**
+   *  @return {string}
+   */
+  build() {
+    // wraps the label around the input tag
+    if (this.wrap) {
+      return '<label' + this.attrs() + '>' +
+        this.text + ' ' + this.input.tag + '</label>';
+    }
+
+    return this.tag + this.input.tag;
+  }
+
+  /**
+   * @return {string}
+   */
+  attrs() {
+    const attr = new AttributeBuilder(this);
+    const htmlAttributes = attr.build().join(' ');
+
+    // space in front of attrs
+    return htmlAttributes ? ' ' + htmlAttributes : '';
   }
 }
 
@@ -75,6 +98,7 @@ module.exports = Label;
  * @property {[]} classes - html attr
  * @property {string} id  - html attr
  * @property {string|boolean} text
+ * @property {boolean} wrap
  */
 
 /**

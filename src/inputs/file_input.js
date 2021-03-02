@@ -7,15 +7,17 @@ const AttributeBuilder = require('../attr_builder');
  * @property {string} [value]
  * @property {string} [name]
  * @property {boolean} [required]
- * @property {boolean} [checked]
- * @property {boolean} [indeterminate]
+ * @property {string} [accept]
  * @property {boolean} [disabled]
+ * @property {boolean} [capture]
+ * @property {string} [files]
+ * @property {boolean} [multiple]
  */
 
 /**
  * html input password
  */
-class CheckboxInput {
+class FileInput {
   /**
    * @param {Structure} structure
    */
@@ -25,20 +27,22 @@ class CheckboxInput {
     this.type = structure.type;
     this.value = structure.value || '';
     this.name = structure.name;
-    this.checked = structure.checked || '';
     this.required = structure.required;
-    this.indeterminate = structure.indeterminate;
     this.disabled = structure.disabled;
+    this.accept = structure.accept;
+    this.capture = structure.capture;
+    this.files = structure.files;
+    this.multiple = structure.multiple;
 
-    this.htmlAttrs = ['class', 'id', 'name', 'value', 'checked', 'required',
-      'indeterminate', 'disabled'];
+    this.htmlAttrs = ['class', 'id', 'name', 'value', 'accept', 'required',
+      'disabled', 'capture', 'files', 'multiple'];
   }
 
   /**
    * @return {string}
    */
   get tag() {
-    return '<input type="checkbox"' + this.attrs() + '>';
+    return '<input type="file"' + this.attrs() + '>';
   }
 
   /**
@@ -53,4 +57,4 @@ class CheckboxInput {
   }
 }
 
-module.exports = CheckboxInput;
+module.exports = FileInput;

@@ -1,29 +1,68 @@
-interface Attributes {
-  list?: string,
-  maxLength?: number,
-  minLength?: number,
-  pattern?: RegExp,
-  placeHolder?: string,
-  size?: number,
-  spellcheck?: boolean,
+const AttributeBuilder = require('../attr_builder');
+/**
+ * @typedef Structure
+ * @property {string} id
+ * @property {[]} class
+ * @property {string} type
+ * @property {string} value
+ * @property {string} name
+ * @property {string} placeholder
+ * @property {boolean} required
+ * @property {number} maxlength
+ * @property {number} minlength
+ * @property {object} pattern
+ * @property {object} spellcheck
+ * @property {boolean} readonly
+ * @property {number} size
+ * @property {boolean} disabled
+ */
 
-  id?: string,
-  class?: string,
-  name?: string,
-  required?: boolean
-}
-
+/**
+ * html input password
+ */
 class PasswordInput {
-  value: string;
-  attributes: Attributes;
-  constructor(v: string, a: Attributes) {
-    this.value = v;
-    this.attributes = a;
+  /**
+   * @param {Structure} structure
+   */
+  constructor(structure) {
+    this.class = structure.class;
+    this.id = structure.id;
+    this.type = structure.type;
+    this.value = structure.value || '';
+    this.name = structure.name;
+    this.placeholder = structure.placeholder || '';
+    this.required = structure.required;
+    this.maxlength = structure.maxlength;
+    this.minlength = structure.minlength;
+    this.pattern = structure.pattern;
+    this.spellcheck = structure.spellcheck;
+    this.readonly = structure.readonly;
+    this.size = structure.size;
+    this.disabled = structure.disabled;
+
+    this.htmlAttrs = ['class', 'id', 'name', 'maxlength', 'minlength',
+      'pattern', 'placeholder', 'spellcheck', 'readonly', 'size', 'required',
+      'disabled'];
   }
 
-  render(attr: string) {
-    return `<input type="text" ${attr} value="${this.value}">`;
+  /**
+   * @return {string}
+   */
+  get tag() {
+    return '<input type="password"' +
+      this.attrs() + `value="${this.value}"` + '>';
+  }
+
+  /**
+   * @return {string}
+   */
+  attrs() {
+    const attr = new AttributeBuilder(this);
+    const htmlAttributes = attr.build().join(' ');
+
+    // space in front of attrs
+    return htmlAttributes ? ' ' + htmlAttributes + ' ' : ' ';
   }
 }
 
-export { PasswordInput }
+module.exports = PasswordInput;

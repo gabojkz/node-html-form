@@ -1,9 +1,21 @@
+const AttributeBuilder = require('../attr_builder');
+
 /**
- * @typedef  {object} Attributes
- * @property {string} id    - input[id]
- * @property {[]}     class - input[class]
- * @property {string} name  - input[name]
- * @property {boolean} required - input[required]
+ * @typedef Structure
+ * @property {string} id
+ * @property {[]} class
+ * @property {string} type
+ * @property {string} value
+ * @property {string} name
+ * @property {string} placeholder
+ * @property {boolean} required
+ * @property {number} maxlength
+ * @property {number} minlength
+ * @property {object} pattern
+ * @property {object} spellcheck
+ * @property {boolean} readonly
+ * @property {number} size
+ * @property {boolean} disabled
  */
 
 /**
@@ -11,23 +23,45 @@
  */
 class TextInput {
   /**
-   *
-   * @param {string} n - name
-   * @param {string} v - value
-   * @param {Attributes} a - attributes
+   * @param {Structure} structure
    */
-  constructor(n, v, a) {
-    this.name = n;
-    this.value = v;
-    this.attributes = a;
+  constructor(structure) {
+    this.class = structure.class;
+    this.id = structure.id;
+    this.type = structure.type;
+    this.value = structure.value || '';
+    this.name = structure.name;
+    this.placeholder = structure.placeholder || '';
+    this.required = structure.required;
+    this.maxlength = structure.maxlength;
+    this.minlength = structure.minlength;
+    this.pattern = structure.pattern;
+    this.spellcheck = structure.spellcheck;
+    this.readonly = structure.readonly;
+    this.size = structure.size;
+    this.disabled = structure.disabled;
+
+    this.htmlAttrs = ['class', 'id', 'name', 'maxlength', 'minlength',
+      'pattern', 'placeholder', 'spellcheck', 'readonly', 'size', 'required',
+      'disabled'];
   }
 
   /**
-   * @param {string} attr
    * @return {string}
    */
-  render(attr) {
-    return `<input type="text" ${attr} value="${this.value}">`;
+  get tag() {
+    return '<input type="text"' + this.attrs() + `value="${this.value}"` + '>';
+  }
+
+  /**
+   * @return {string}
+   */
+  attrs() {
+    const attr = new AttributeBuilder(this);
+    const htmlAttributes = attr.build().join(' ');
+
+    // space in front of attrs
+    return htmlAttributes ? ' ' + htmlAttributes + ' ' : ' ';
   }
 }
 

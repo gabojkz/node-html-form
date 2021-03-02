@@ -2,11 +2,12 @@
 'use strict';
 const chai = require('chai');
 const expect = chai.expect;
-const TextareaInput = require('../../inputs/textarea_input');
+const PasswordInput = require('../../inputs/password_input');
 
-describe('TextareaInput', function() {
+describe('PasswordInput', function() {
   beforeEach(function() {
     this.baseInput = {
+      type: 'password',
       class: ['form-control', 'small'],
       name: 'your-name',
       id: 'your-id',
@@ -15,12 +16,14 @@ describe('TextareaInput', function() {
   });
 
   it('can create a new form obj', function() {
-    const input = new TextareaInput(this.baseInput);
-    expect(input).to.be.an.instanceof(TextareaInput);
+    const input = new PasswordInput(this.baseInput);
+    expect(input).to.be.an.instanceof(PasswordInput);
   });
 
   it('text input has the correct properties', function() {
-    const input = new TextareaInput(this.baseInput);
+    const input = new PasswordInput(this.baseInput);
+
+    expect(input.type).to.be.equal('password');
 
     expect(input.class).to.be.an('array')
         .that.deep.equal(['form-control', 'small']);
@@ -33,25 +36,25 @@ describe('TextareaInput', function() {
 
     expect(input.htmlAttrs).to.be.an('array')
         .that.deep.equal(['class', 'id', 'name', 'maxlength', 'minlength',
-          'placeholder', 'spellcheck', 'readonly', 'rows', 'cols',
+          'pattern', 'placeholder', 'spellcheck', 'readonly', 'size',
           'required', 'disabled']
         );
   });
 
   it('basic tag element', function() {
-    const input = new TextareaInput({});
+    const input = new PasswordInput({});
     expect(input.tag).to.be
-        .equal('<textarea rows="2" cols="20" required ></textarea>');
+        .equal('<input type="password" required value="">');
   });
 
   it('remove required from input', function() {
-    const input = new TextareaInput({required: false});
+    const input = new PasswordInput({required: false});
     expect(input.tag).to.be
-        .equal('<textarea rows="2" cols="20" ></textarea>');
+        .equal('<input type="password" value="">');
   });
 
   it('includes all the attrs', function() {
-    const input = new TextareaInput({
+    const input = new PasswordInput({
       type: 'text',
       class: ['form-control', 'small'],
       name: 'new-name',
@@ -65,9 +68,9 @@ describe('TextareaInput', function() {
     });
 
     expect(input.tag).to.be.equal(
-        '<textarea class="form-control small" id="text-id" name="new-name" ' +
-        'maxlength="80" minlength="30" placeholder="place-holder" rows="30" ' +
-        'cols="40" required >val</textarea>'
+        '<input type="password" class="form-control small" id="text-id" ' +
+        'name="new-name" maxlength="80" minlength="30" ' +
+        'placeholder="place-holder" required value="val">'
     );
   });
 });

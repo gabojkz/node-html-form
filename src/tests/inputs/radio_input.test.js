@@ -2,11 +2,12 @@
 'use strict';
 const chai = require('chai');
 const expect = chai.expect;
-const TextareaInput = require('../../inputs/textarea_input');
+const RadioInput = require('../../inputs/radio_input');
 
-describe('TextareaInput', function() {
+describe('RadioInput', function() {
   beforeEach(function() {
     this.baseInput = {
+      type: 'radio',
       class: ['form-control', 'small'],
       name: 'your-name',
       id: 'your-id',
@@ -15,12 +16,14 @@ describe('TextareaInput', function() {
   });
 
   it('can create a new form obj', function() {
-    const input = new TextareaInput(this.baseInput);
-    expect(input).to.be.an.instanceof(TextareaInput);
+    const input = new RadioInput(this.baseInput);
+    expect(input).to.be.an.instanceof(RadioInput);
   });
 
   it('text input has the correct properties', function() {
-    const input = new TextareaInput(this.baseInput);
+    const input = new RadioInput(this.baseInput);
+
+    expect(input.type).to.be.equal('radio');
 
     expect(input.class).to.be.an('array')
         .that.deep.equal(['form-control', 'small']);
@@ -32,42 +35,35 @@ describe('TextareaInput', function() {
     expect(input.value).to.be.equal('val');
 
     expect(input.htmlAttrs).to.be.an('array')
-        .that.deep.equal(['class', 'id', 'name', 'maxlength', 'minlength',
-          'placeholder', 'spellcheck', 'readonly', 'rows', 'cols',
-          'required', 'disabled']
+        .that.deep.equal(['class', 'id', 'name', 'required', 'disabled',
+          'checked']
         );
   });
 
   it('basic tag element', function() {
-    const input = new TextareaInput({});
+    const input = new RadioInput({});
     expect(input.tag).to.be
-        .equal('<textarea rows="2" cols="20" required ></textarea>');
+        .equal('<input type="radio" required value="">');
   });
 
   it('remove required from input', function() {
-    const input = new TextareaInput({required: false});
+    const input = new RadioInput({required: false});
     expect(input.tag).to.be
-        .equal('<textarea rows="2" cols="20" ></textarea>');
+        .equal('<input type="radio" value="">');
   });
 
   it('includes all the attrs', function() {
-    const input = new TextareaInput({
-      type: 'text',
+    const input = new RadioInput({
       class: ['form-control', 'small'],
       name: 'new-name',
       id: 'text-id',
       value: 'val',
-      maxlength: 80,
-      minlength: 30,
-      cols: 40,
-      rows: 30,
-      placeholder: 'place-holder',
+      checked: true,
     });
 
     expect(input.tag).to.be.equal(
-        '<textarea class="form-control small" id="text-id" name="new-name" ' +
-        'maxlength="80" minlength="30" placeholder="place-holder" rows="30" ' +
-        'cols="40" required >val</textarea>'
+        '<input type="radio" class="form-control small" id="text-id" ' +
+        'name="new-name" required checked value="val">'
     );
   });
 });

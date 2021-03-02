@@ -8,35 +8,38 @@ const AttributeBuilder = require('../attr_builder');
  * @property {string} name
  * @property {boolean} checked
  * @property {boolean} required
+ * @property {string} label
  * @property {boolean} disabled
+ * @property {boolean} selected
+ * @property {string} content
  */
 
 /**
- * html input password
+ * html element option
+ * @example
+ *  <option value="dog">Pet</option>
  */
-class RadioInput {
+class Option {
   /**
    * @param {Structure} structure
    */
   constructor(structure) {
-    this.class = structure.class;
     this.id = structure.id;
-    this.type = structure.type;
-    this.name = structure.name;
+    this.class = structure.class;
+    this.label = structure.label;
+    this.content = structure.content;
     this.value = structure.value || '';
-    this.required = structure.required;
+    this.selected = structure.selected;
     this.disabled = structure.disabled;
-    this.checked = structure.checked;
 
-    this.htmlAttrs = ['class', 'id', 'name', 'required', 'disabled', 'checked'];
+    this.htmlAttrs = ['class', 'id', 'label', 'value', 'selected', 'disabled'];
   }
 
   /**
    * @return {string}
    */
   get tag() {
-    return '<input type="radio"' +
-      this.attrs() + `value="${this.value}"` + '>';
+    return `<option ${this.attrs()}>${this.content}</option>`;
   }
 
   /**
@@ -47,8 +50,8 @@ class RadioInput {
     const htmlAttributes = attr.build().join(' ');
 
     // space in front of attrs
-    return htmlAttributes ? ' ' + htmlAttributes + ' ' : ' ';
+    return htmlAttributes;
   }
 }
 
-module.exports = RadioInput;
+module.exports = Option;
