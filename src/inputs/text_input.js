@@ -23,9 +23,13 @@ const AttributeBuilder = require('../attr_builder');
  */
 class TextInput {
   /**
+   * @param {string} name
    * @param {Structure} structure
    */
-  constructor(structure) {
+  constructor(name, structure) {
+    this._name_ = name;
+
+    // name and id and placeholder
     this.class = structure.class;
     this.id = structure.id;
     this.type = structure.type;

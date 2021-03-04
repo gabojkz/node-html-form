@@ -22,9 +22,12 @@ const AttributeBuilder = require('../attr_builder');
  */
 class PasswordInput {
   /**
+   * @param {string} name
    * @param {Structure} structure
    */
-  constructor(structure) {
+  constructor(name, structure) {
+    this._name_ = name;
+
     this.class = structure.class;
     this.id = structure.id;
     this.type = structure.type;

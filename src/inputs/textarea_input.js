@@ -22,21 +22,23 @@ const AttributeBuilder = require('../attr_builder');
  */
 class TextareaInput {
   /**
+   * @param {string} name
    * @param {Structure} structure
    */
-  constructor(structure) {
+  constructor(name, structure) {
+    this._name_ = name;
     this.class = structure.class;
     this.id = structure.id;
-    this.value = structure.value || '';
+    this.value = structure.value;
     this.name = structure.name;
-    this.placeholder = structure.placeholder || '';
+    this.placeholder = structure.placeholder;
     this.required = structure.required;
     this.maxlength = structure.maxlength;
     this.minlength = structure.minlength;
     this.spellcheck = structure.spellcheck;
     this.readonly = structure.readonly;
-    this.rows = structure.rows || 2;
-    this.cols = structure.cols || 20;
+    this.rows = structure.rows;
+    this.cols = structure.cols;
     this.disabled = structure.disabled;
 
     this.htmlAttrs = ['class', 'id', 'name', 'maxlength', 'minlength',

@@ -18,9 +18,12 @@ const Option = require('../inputs/option');
  */
 class SelectInput {
   /**
+   * @param {string} name
    * @param {Structure} structure
    */
-  constructor(structure) {
+  constructor(name, structure) {
+    this._name_ = name;
+
     this.class = structure.class;
     this.id = structure.id;
     this.type = structure.type;

@@ -8,17 +8,18 @@ const AttributeBuilder = require('./attr_builder');
  */
 class Label {
   /**
+   * @param {string} name
    * @param {InputElement} input
    * @param {Structure} structure
    * @property {Array.<string>} htmlAttrs
    */
-  constructor(input, structure) {
+  constructor(name, input, structure) {
+    this._name_ = name;
     this.input = input;
 
     const plainLabel = structure.label || {};
-
     this._text = plainLabel.text;
-    this.class = plainLabel.classes;
+    this.class = plainLabel.class;
     this.id = plainLabel.id;
     this.for = plainLabel.for || structure.id;
     this.wrap = plainLabel.wrap || false;
@@ -37,14 +38,15 @@ class Label {
     if (this._text) return this._text;
 
     // when undefined or null
-    return this.for ? prettyCase(this.for) : '';
+    return prettyCase(this._name_);
   }
 
   /**
    * tag html element
    */
   get tag() {
-    return '<label' + this.attrs() + '>' + this.text + '</label>';
+    const content = this.input.required ? this.text + '*' : this.text;
+    return '<label' + this.attrs() + '>' + content + '</label>';
   }
 
   /**
@@ -73,12 +75,12 @@ class Label {
 }
 
 /**
- *
  * @param {string} text
  * @return {string}
  */
 function prettyCase(text) {
-  return text.charAt(0) + text.replace(/[-_]/g, ' ').slice(1);
+  return text.charAt(0).toUpperCase() +
+    text.replace(/([A-Z])/g, ' $1').slice(1);
 }
 
 /**
@@ -95,7 +97,7 @@ module.exports = Label;
 /**
  * @typedef {object} PlainLabel
  * @property {string} for - html attr match input id
- * @property {[]} classes - html attr
+ * @property {[]} class - html attr
  * @property {string} id  - html attr
  * @property {string|boolean} text
  * @property {boolean} wrap

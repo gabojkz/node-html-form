@@ -10,10 +10,14 @@
 6. create a new branch [how to create a new branch?](https://github.com/Kunena/Kunena-Forum/wiki/Create-a-new-branch-with-git-and-manage-branches)
 7. run create a new PR by push the changes
 
-# Roadmap
-  - [x] can create new objs
-  - [-] objs are close
-  - [] 
+# Features
+  - [x] can generate a basic form
+  - [ ] can style the form
+  - [ ] can validate input from the client
+  - [ ] can print the errors
+  - [ ] can provide basic generic form values like clases
+  - [ ] can extend the form
 
-should be able to render html
-should be able to validate the fields
+
+# ??
+Javascript code execution async vs sync

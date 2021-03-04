@@ -19,9 +19,12 @@ const AttributeBuilder = require('../attr_builder');
  */
 class FileInput {
   /**
+   * @param {string} name
    * @param {Structure} structure
    */
-  constructor(structure) {
+  constructor(name, structure) {
+    this._name_ = name;
+
     this.id = structure.id;
     this.class = structure.class;
     this.type = structure.type;

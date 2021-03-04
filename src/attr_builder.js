@@ -48,7 +48,12 @@ class AttributeBuilder {
   /** @return {string|void} */
   class() {
     if (!this.element.class) return;
-    return `class="${this.element.class.join(' ')}"`;
+
+    if (Array.isArray(this.element.class)) {
+      return `class="${this.element.class.join(' ')}"`;
+    }
+
+    return `class="${this.element.class}"`;
   }
 
   /** @return {string|void} */
