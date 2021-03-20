@@ -1,5 +1,6 @@
 const AttributeBuilder = require('../core/attr_builder');
 const Option = require('../inputs/option');
+const OptionGroup = require('../inputs/option_group');
 /**
  * @typedef Structure
  * @property {string} id
@@ -10,14 +11,13 @@ const Option = require('../inputs/option');
  * @property {boolean} checked
  * @property {boolean} required
  * @property {boolean} disabled
- * @property {string} caption
  * @property {Array.<string|object>} options
  */
 
 /**
  * html input password
  */
-class SelectInput {
+class SelectMultipleInput {
   /**
    * @param {string} name
    * @param {Structure} structure
@@ -34,36 +34,31 @@ class SelectInput {
     this.disabled = structure.disabled;
     this.checked = structure.checked;
     this.options = structure.options;
-    this.caption = structure.caption;
 
     this.htmlAttrs = ['class', 'id', 'name', 'required', 'disabled', 'checked'];
 
-    this._options_ = structure.options.map( (option) => {
-      return new Option(this.parseOption(option));
-    });
+    // THIS NEEDS TO BE FIXED
+    this._options_ = this.parseOptions(structure.options);
   }
 
   /**
    * @return {string}
    */
   get tag() {
-    let htmlTag = '<select';
+    let htmlTag = '<select multiple';
     // the option could be partial obj or a string
     // format or parse that to a valid format
+
     if (this.options && Array.isArray(this.options)) {
-      const selectOptions = this._options_.map((option) => {
-        return option.tag;
-      }).join('');
+      // const selectOptions = this.options.map((option) => {
+      //   return this.parseOption(option);
+      // }).map((option) => {
+      //   return option.tag;
+      // }).join('');
 
       htmlTag += this.attrs() ? ' ' + this.attrs() : '';
       htmlTag += '>';
-
-      if (this.caption) {
-        const caption = new Option({content: this.caption, value: ''});
-        htmlTag += caption.tag;
-      }
-
-      htmlTag += selectOptions;
+      // htmlTag += selectOptions;
       htmlTag += '</select>'; // close
       return htmlTag;
     }
@@ -82,36 +77,49 @@ class SelectInput {
   }
 
   /**
-   * @param {string|Option} option
+   * @param {string|Object} option
    * @return {object}
    */
-  parseOption(option) {
+  parseOptions(option) {
+
     if (typeof option === 'string') {
-      return {
+      return new Option({
         value: option,
         content: option,
-      };
+      });
     }
 
-    return {
+
+    if ('group' in option) {
+      const items = option.items ? option.items : new Array(option);
+      const optionGroup = new OptionGroup(option.group);
+
+      items.forEach((option) => {
+        optionGroup.addOption({ 
+          content: option.name, 
+          ...option,
+        });
+      });
+
+      return optionGroup;
+    }
+
+    return new Option({ 
       value: option.value,
-      content: option.name,
-      selected: option.selected,
-      id: option.id,
-      class: option.class,
-      disabled: option.disabled,
-    };
+      content: option.name, 
+      ...option,
+    })
   }
 
   /**
    * @param {string} value
    */
   setValue(value) {
-    const selected = this._options_.find( (opt) => {
-      return opt.value == value;
-    });
-    if (selected) selected.selected = true;
+    if(value) {
+      console.log(value);
+
+    }
   }
 }
 
-module.exports = SelectInput;
+module.exports = SelectMultipleInput;

@@ -1,16 +1,16 @@
-const AttributeBuilder = require('../attr_builder');
+const AttributeBuilder = require('../core/attr_builder');
 /**
  * @typedef Structure
- * @property {string} id
- * @property {[]} class
- * @property {string} type
+ * @property {string} [id]
+ * @property {[]} [class]
+ * @property {string} [type]
  * @property {string} value
- * @property {string} name
- * @property {boolean} checked
- * @property {boolean} required
- * @property {string} label
- * @property {boolean} disabled
- * @property {boolean} selected
+ * @property {string} [name]
+ * @property {boolean} [checked]
+ * @property {boolean} [required]
+ * @property {string} [label]
+ * @property {boolean} [disabled]
+ * @property {boolean} [selected]
  * @property {string} content
  */
 

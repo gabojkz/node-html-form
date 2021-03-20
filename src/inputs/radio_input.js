@@ -1,4 +1,4 @@
-const AttributeBuilder = require('../attr_builder');
+const AttributeBuilder = require('../core/attr_builder');
 /**
  * @typedef Structure
  * @property {string} id
@@ -26,7 +26,7 @@ class RadioInput {
     this.id = structure.id;
     this.type = structure.type;
     this.name = structure.name;
-    this.value = structure.value || '';
+    this.value = structure.value;
     this.required = structure.required;
     this.disabled = structure.disabled;
     this.checked = structure.checked;
@@ -51,6 +51,16 @@ class RadioInput {
 
     // space in front of attrs
     return htmlAttributes ? ' ' + htmlAttributes + ' ' : ' ';
+  }
+
+  /**
+   * @param {string} value
+   */
+  setValue(value) {
+    console.log(value);
+    if (value && this.value == value) {
+      this.checked = true;
+    }
   }
 }
 

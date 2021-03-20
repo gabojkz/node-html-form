@@ -1,4 +1,30 @@
-const AttributeBuilder = require('./attr_builder');
+const AttributeBuilder = require('../core/attr_builder');
+
+/**
+ * @typedef {object} PlainLabel
+ * @property {string} for - html attr match input id
+ * @property {[]} class - html attr
+ * @property {string} id  - html attr
+ * @property {string|boolean} text
+ * @property {boolean} wrap
+ */
+
+/**
+ * @typedef Structure
+ * @property {PlainLabel} label
+ * @property {string} id
+ */
+
+/**
+  * @typedef InputNode
+  * @property {string} type
+  * @property {unknown} value
+  */
+
+/**
+ * @typedef InputElement
+ * @type Object.<string, object>
+ */
 
 /**
  * html label element
@@ -17,12 +43,13 @@ class Label {
     this._name_ = name;
     this.input = input;
 
-    const plainLabel = structure.label || {};
+    const plainLabel = structure.label;
     this._text = plainLabel.text;
     this.class = plainLabel.class;
     this.id = plainLabel.id;
-    this.for = plainLabel.for || structure.id;
-    this.wrap = plainLabel.wrap || false;
+    this.for = plainLabel.for;
+    this.wrap = plainLabel.wrap;
+    this.show = plainLabel.show;
     this.htmlAttrs = ['for', 'class', 'id'];
   }
 
@@ -93,30 +120,4 @@ function prettyCase(text) {
 // }
 
 module.exports = Label;
-
-/**
- * @typedef {object} PlainLabel
- * @property {string} for - html attr match input id
- * @property {[]} class - html attr
- * @property {string} id  - html attr
- * @property {string|boolean} text
- * @property {boolean} wrap
- */
-
-/**
- * @typedef Structure
- * @property {PlainLabel} label
- * @property {string} id
- */
-
-/**
-  * @typedef InputNode
-  * @property {string} type
-  * @property {unknown} value
-  */
-
-/**
- * @typedef InputElement
- * @type Object.<string, object>
- */
 

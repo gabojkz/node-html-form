@@ -1,26 +1,31 @@
 'use strict';
 
 /**
- * @param {string} name - input name
- * @param {object} [attributes] - single input structure
- * @return {object|null}
+ * Module dependencies.
+ * @private
  */
-function configCore(name, attributes) {
-  if (isPrimitive(attributes)) return null;
-  if (!name) return null;
 
-  const defaultValues = {
+/**
+ * Parser
+ * @param {string} inputName
+ * @param  {object} rawInputStruct
+ * @return {Object}
+ */
+function parser(inputName, rawInputStruct) {
+  const DEFAULTS = {
     label: {
-      text: undefined,
+      text: inputName,
       class: undefined,
       id: undefined,
-      for: 'id_' + name,
+      for: 'id_' + inputName,
       wrap: false,
+      show: true,
     },
-    for: 'id_' + name,
+    type: 'text', // default type
+    for: 'id_' + inputName,
     class: undefined,
-    id: 'id_' + name,
-    name: name,
+    id: 'id_' + inputName,
+    name: inputName,
     maxlength: undefined,
     minlength: undefined,
     pattern: undefined,
@@ -41,12 +46,7 @@ function configCore(name, attributes) {
     multiple: true,
   };
 
-  return Object.assign(attributes, defaultValues);
-};
-
-
-function isPrimitive(value) {
-  return value === null || typeof value !== 'object';
+  return Object.assign({}, DEFAULTS, rawInputStruct);
 }
 
-module.exports = configCore;
+module.exports = parser;

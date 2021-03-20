@@ -1,4 +1,5 @@
 const AttributeBuilder = require('../core/attr_builder');
+
 /**
  * @typedef Structure
  * @property {string} id
@@ -10,39 +11,42 @@ const AttributeBuilder = require('../core/attr_builder');
  * @property {boolean} required
  * @property {number} maxlength
  * @property {number} minlength
- * @property {number} cols
+ * @property {object} pattern
  * @property {object} spellcheck
  * @property {boolean} readonly
- * @property {number} rows
+ * @property {number} size
  * @property {boolean} disabled
  */
 
 /**
- * html input textarea
+ * html input type text
  */
-class TextareaInput {
+class UrlInput {
   /**
    * @param {string} name
    * @param {Structure} structure
    */
   constructor(name, structure) {
     this._name_ = name;
+
+    // name and id and placeholder
     this.class = structure.class;
     this.id = structure.id;
-    this.value = structure.value;
+    this.type = structure.type;
+    this.value = structure.value || '';
     this.name = structure.name;
-    this.placeholder = structure.placeholder;
+    this.placeholder = structure.placeholder || '';
     this.required = structure.required;
     this.maxlength = structure.maxlength;
     this.minlength = structure.minlength;
+    this.pattern = structure.pattern;
     this.spellcheck = structure.spellcheck;
     this.readonly = structure.readonly;
-    this.rows = structure.rows;
-    this.cols = structure.cols;
+    this.size = structure.size;
     this.disabled = structure.disabled;
 
     this.htmlAttrs = ['class', 'id', 'name', 'maxlength', 'minlength',
-      'placeholder', 'spellcheck', 'readonly', 'rows', 'cols', 'required',
+      'pattern', 'placeholder', 'spellcheck', 'readonly', 'size', 'required',
       'disabled'];
   }
 
@@ -50,7 +54,7 @@ class TextareaInput {
    * @return {string}
    */
   get tag() {
-    return '<textarea' + this.attrs() + '>' + this.value + '</textarea>';
+    return '<input type="url"' + this.attrs() + `value="${this.value}"` + '>';
   }
 
   /**
@@ -72,4 +76,4 @@ class TextareaInput {
   }
 }
 
-module.exports = TextareaInput;
+module.exports = UrlInput;

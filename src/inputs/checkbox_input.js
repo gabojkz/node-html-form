@@ -1,4 +1,4 @@
-const AttributeBuilder = require('../attr_builder');
+const AttributeBuilder = require('../core/attr_builder');
 /**
  * @typedef Structure
  * @property {string} [id]
@@ -52,6 +52,13 @@ class CheckboxInput {
 
     // space in front of attrs
     return htmlAttributes ? ' ' + htmlAttributes : ' ';
+  }
+
+  /**
+   * @param {string} value
+   */
+  setValue(value) {
+    if (value) this.checked = true;
   }
 }
 

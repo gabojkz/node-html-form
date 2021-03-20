@@ -26,6 +26,8 @@
  * @property {string} accept
  * @property {boolean} capture
  * @property {boolean} multiple
+ * @property {object} max
+ * @property {object} min
  */
 
 /**
@@ -50,7 +52,8 @@ class AttributeBuilder {
     if (!this.element.class) return;
 
     if (Array.isArray(this.element.class)) {
-      return `class="${this.element.class.join(' ')}"`;
+      const unique = [...new Set(this.element.class)];
+      return `class="${unique.join(' ')}"`;
     }
 
     return `class="${this.element.class}"`;
@@ -183,6 +186,18 @@ class AttributeBuilder {
   accept() {
     if (!this.element.accept) return;
     return `accept="${this.element.accept}"`;
+  }
+
+  /** @return {string|void} */
+  max() {
+    if (!this.element.max) return;
+    return `max="${this.element.max}"`;
+  }
+
+  /** @return {string|void} */
+  min() {
+    if (!this.element.min) return;
+    return `min="${this.element.min}"`;
   }
 
   /** @return {string|void} */
