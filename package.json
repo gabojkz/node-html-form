@@ -2,9 +2,8 @@
   "name": "node-html-forms",
   "version": "1.0.0",
   "description": "node html forms builder",
-  "main": "index.js",
+  "main": "./src/index",
   "scripts": {
-    "start": "nodemon web/server.js",
     "coverage": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test"
   },
   "author": "gabriel zapata",
@@ -16,10 +15,8 @@
     "chai": "^4.3.0",
     "eslint": "^7.20.0",
     "eslint-config-google": "^0.14.0",
-    "express": "^4.17.1",
     "jsdoc": "^3.6.6",
     "mocha": "^8.3.0",
-    "nodemon": "^2.0.7",
     "nyc": "^15.1.0",
     "pug": "^3.0.2",
     "typescript": "^4.1.5"

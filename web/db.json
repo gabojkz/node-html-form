@@ -1,0 +1,53 @@
+{
+  "users": [
+    {
+      "name": "dsfjds@dlsfk.com",
+      "email": "349234@gkfd.com",
+      "phone": "324234",
+      "description": "undefined",
+      "age": "10",
+      "password": "*superNewPass123.",
+      "remember": "on",
+      "city": "1",
+      "turn": "on",
+      "activity": "sports",
+      "cities": "chicago",
+      "url": "https://example.com",
+      "amount": "30"
+    }
+  ],
+  "countries": [
+    {
+      "USA": {
+        "cities": [
+          {
+            "name": "New York"
+          },
+          {
+            "name": "Los Angeles"
+          },
+          {
+            "name": "Chicago"
+          },
+          {
+            "name": "Illinois"
+          }
+        ]
+      }
+    }
+  ],
+  "cars": [
+    {
+      "id": 1,
+      "brand": "Toyota"
+    },
+    {
+      "id": 2,
+      "brand": "Ferrari"
+    },
+    {
+      "id": 4,
+      "brand": "Nissan"
+    }
+  ]
+}
