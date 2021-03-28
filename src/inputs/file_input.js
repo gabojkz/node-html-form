@@ -3,7 +3,6 @@ const AttributeBuilder = require('../core/attr_builder');
  * @typedef Structure
  * @property {string} [id]
  * @property {Array.<string>} [class]
- * @property {string} [type]
  * @property {string} [value]
  * @property {string} [name]
  * @property {boolean} [required]
@@ -15,21 +14,22 @@ const AttributeBuilder = require('../core/attr_builder');
  */
 
 /**
- * html input password
+ * Html input file
+ * @example
+ *    <input type="file" id="id_avatar" name="avatar" accept="image/png">
  */
 class FileInput {
   /**
-   * @param {string} name
+   * @param {string} name - form structure key name
    * @param {Structure} structure
    */
   constructor(name, structure) {
     this._name_ = name;
+    this.name = structure.name;
 
     this.id = structure.id;
     this.class = structure.class;
-    this.type = structure.type;
-    this.value = structure.value || '';
-    this.name = structure.name;
+    this.value = structure.value;
     this.required = structure.required;
     this.disabled = structure.disabled;
     this.accept = structure.accept;
@@ -45,26 +45,15 @@ class FileInput {
    * @return {string}
    */
   get tag() {
-    return '<input type="file"' + this.attrs() + '>';
-  }
-
-  /**
-   * @return {string}
-   */
-  attrs() {
-    const attr = new AttributeBuilder(this);
-    const htmlAttributes = attr.build().join(' ');
-
-    // space in front of attrs
-    return htmlAttributes ? ' ' + htmlAttributes : ' ';
+    const attr = new AttributeBuilder(Object.create(this));
+    return `<input type="file" ${attr.toString()}>`;
   }
 
   /**
    * @param {string} value
    */
   setValue(value) {
-    console.log(value);
-    // if (value && value == this.value) this.checked = true;
+    this.value = value;
   }
 }
 

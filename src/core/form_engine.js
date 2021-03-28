@@ -40,8 +40,6 @@ class FormEngine {
         );
       }
     }
-
-    this.updateInputs();
   }
 
   /***/
@@ -49,7 +47,7 @@ class FormEngine {
     const data = Array.isArray(this.data) ? this.data[0] : {};
     for (const [key, value] of Object.entries(data)) {
       if ({}.hasOwnProperty.call(data, key)) {
-        this.input[key].setValue( value );
+        // this.input[key].setValue( value );
       }
     }
   }

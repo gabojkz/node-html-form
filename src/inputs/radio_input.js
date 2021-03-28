@@ -1,4 +1,5 @@
 const AttributeBuilder = require('../core/attr_builder');
+
 /**
  * @typedef Structure
  * @property {string} id
@@ -9,10 +10,13 @@ const AttributeBuilder = require('../core/attr_builder');
  * @property {boolean} checked
  * @property {boolean} required
  * @property {boolean} disabled
+ * @property {[]} options
  */
 
 /**
- * html input password
+ * html radio input
+ * @example
+ *   <input type="radio" id="id_drone" name="drone" value="huey" checked>
  */
 class RadioInput {
   /**
@@ -20,48 +24,62 @@ class RadioInput {
    * @param {Structure} structure
    */
   constructor(name, structure) {
-    this._name_ = name;
+    if (!Array.isArray(structure.options)) {
+      throw new Error('radio options are not an array');
+    }
+    this.options = structure.options.map((radio) => {
+      let attr = {
+        value: '',
+      };
 
-    this.class = structure.class;
-    this.id = structure.id;
-    this.type = structure.type;
-    this.name = structure.name;
-    this.value = structure.value;
-    this.required = structure.required;
-    this.disabled = structure.disabled;
-    this.checked = structure.checked;
+      if (typeof radio === 'string') {
+        attr.value = radio;
+      }
 
-    this.htmlAttrs = ['class', 'id', 'name', 'required', 'disabled', 'checked'];
+      if (typeof radio === 'object') {
+        attr = radio;
+      }
+
+      return new RadioNode(Object.assign({}, structure, attr), name);
+    });
   }
 
   /**
    * @return {string}
    */
   get tag() {
-    return '<input type="radio"' +
-      this.attrs() + `value="${this.value}"` + '>';
+    return this.options.map((option) => option.tag ).join(' ');
+  }
+}
+/** */
+class RadioNode {
+  /**
+   * @param {Structure} radio
+   * @param {string} name
+   */
+  constructor(radio, name) {
+    this._name_ = name;
+    this.name = radio.name;
+    this.value = radio.value;
+    this.id = radio.id;
+    this.class = radio.class;
+    this.required = radio.required;
+    this.checked = radio.checked;
+    this.disabled = radio.disabled;
+
+    this.htmlAttrs = [
+      'id', 'class', 'name', 'value', 'disabled', 'required', 'checked',
+    ];
   }
 
   /**
    * @return {string}
    */
-  attrs() {
-    const attr = new AttributeBuilder(this);
-    const htmlAttributes = attr.build().join(' ');
-
-    // space in front of attrs
-    return htmlAttributes ? ' ' + htmlAttributes + ' ' : ' ';
-  }
-
-  /**
-   * @param {string} value
-   */
-  setValue(value) {
-    console.log(value);
-    if (value && this.value == value) {
-      this.checked = true;
-    }
+  get tag() {
+    const attr = new AttributeBuilder(Object.create(this));
+    return `<input type="radio" ${attr.toString()}>`;
   }
 }
 
 module.exports = RadioInput;
+

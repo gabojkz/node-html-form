@@ -3,7 +3,6 @@ const AttributeBuilder = require('../core/attr_builder');
  * @typedef Structure
  * @property {string} [id]
  * @property {[]} [class]
- * @property {string} [type]
  * @property {string} value
  * @property {string} [name]
  * @property {boolean} [checked]
@@ -39,18 +38,8 @@ class Option {
    * @return {string}
    */
   get tag() {
-    return `<option ${this.attrs()}>${this.content}</option>`;
-  }
-
-  /**
-   * @return {string}
-   */
-  attrs() {
-    const attr = new AttributeBuilder(this);
-    const htmlAttributes = attr.build().join(' ');
-
-    // space in front of attrs
-    return htmlAttributes;
+    const attr = new AttributeBuilder(Object.create(this));
+    return `<option ${attr.toString()}>${this.content}</option>`;
   }
 }
 

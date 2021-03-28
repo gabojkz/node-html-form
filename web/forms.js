@@ -3,6 +3,9 @@ const {NodeForm} = require('node-html-forms');
 module.exports = {
   registrationForm: function(data) {
     const fields = {
+      files: {
+        type: 'file',
+      },
       name: {
         type: 'text',
         class: 'form-control',
@@ -10,6 +13,7 @@ module.exports = {
       },
       email: {
         type: 'email',
+        value: 'gabriel@email.com',
       },
       phone: {
         type: 'phone',
@@ -17,6 +21,7 @@ module.exports = {
       },
       description: {
         type: 'textarea',
+        value: 'some content',
       },
       age: {
         type: 'range',
@@ -38,19 +43,30 @@ module.exports = {
           return {value: car.id, name: car.brand};
         }),
       },
-      turn: {
-        type: 'radio',
-        value: 'on',
-      },
       activity: {
-        type: 'radioMultiple',
-        options: ['tv', 'sports', 'gaming'],
+        type: 'radio',
+        options: ['sports', 'gaming', {checked: true, value: 'cooking'}],
       },
       cities: {
-        type: 'selectMultiple',
-        options: [{
-          name: 'chicago', value: 'chicago',
-        }],
+        type: 'select',
+        multiple: true,
+        options: [
+          'new york',
+          {
+            name: 'chicago', value: 'chicago',
+          },
+          {
+            group: 'city',
+            items: [
+              'San diego',
+              {name: 'Las vegas', value: 'Las vegas'},
+              {
+                group: 'sub category',
+                items: ['sub 1', 'sub2'],
+              },
+            ],
+          },
+        ],
       },
       url: {
         type: 'url',

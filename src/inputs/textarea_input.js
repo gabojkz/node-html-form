@@ -3,7 +3,6 @@ const AttributeBuilder = require('../core/attr_builder');
  * @typedef Structure
  * @property {string} id
  * @property {[]} class
- * @property {string} type
  * @property {string} value
  * @property {string} name
  * @property {string} placeholder
@@ -15,10 +14,16 @@ const AttributeBuilder = require('../core/attr_builder');
  * @property {boolean} readonly
  * @property {number} rows
  * @property {boolean} disabled
+ * @property {boolean} autocomplete
+ * @property {boolean} autofocus
  */
 
 /**
  * html input textarea
+ * @example
+ *    <textarea id="id_desc" name="desc" rows="2" cols="20" required="">
+ *     content...
+ *    </textarea>
  */
 class TextareaInput {
   /**
@@ -27,10 +32,10 @@ class TextareaInput {
    */
   constructor(name, structure) {
     this._name_ = name;
+    this.name = structure.name;
     this.class = structure.class;
     this.id = structure.id;
-    this.value = structure.value;
-    this.name = structure.name;
+    this.content = structure.value;
     this.placeholder = structure.placeholder;
     this.required = structure.required;
     this.maxlength = structure.maxlength;
@@ -40,35 +45,27 @@ class TextareaInput {
     this.rows = structure.rows;
     this.cols = structure.cols;
     this.disabled = structure.disabled;
+    this.autocomplete = structure.autocomplete;
+    this.autofocus = structure.autofocus;
 
     this.htmlAttrs = ['class', 'id', 'name', 'maxlength', 'minlength',
       'placeholder', 'spellcheck', 'readonly', 'rows', 'cols', 'required',
-      'disabled'];
+      'disabled', 'autocomplete', 'autofocus'];
   }
 
   /**
    * @return {string}
    */
   get tag() {
-    return '<textarea' + this.attrs() + '>' + this.value + '</textarea>';
-  }
-
-  /**
-   * @return {string}
-   */
-  attrs() {
-    const attr = new AttributeBuilder(this);
-    const htmlAttributes = attr.build().join(' ');
-
-    // space in front of attrs
-    return htmlAttributes ? ' ' + htmlAttributes + ' ' : ' ';
+    const attr = new AttributeBuilder(Object.create(this));
+    return `<textarea ${attr.toString()}>${this.content}</textarea>`;
   }
 
   /**
    * @param {string} value
    */
   setValue(value) {
-    if (value) this.value = value;
+    if (value) this.content = value;
   }
 }
 

@@ -1,77 +1,42 @@
 const AttributeBuilder = require('../core/attr_builder');
+const InputText = require('./text_input');
 /**
  * @typedef Structure
- * @property {string} id
- * @property {[]} class
- * @property {string} type
- * @property {string} value
- * @property {string} name
- * @property {string} placeholder
- * @property {boolean} required
- * @property {number} maxlength
- * @property {number} minlength
- * @property {object} pattern
- * @property {object} spellcheck
- * @property {boolean} readonly
- * @property {number} size
- * @property {boolean} disabled
+ * @property {string} [id]
+ * @property {[]} [class]
+ * @property {string} [value]
+ * @property {string} [name]
+ * @property {string} [placeholder]
+ * @property {boolean} [required]
+ * @property {number} [maxlength]
+ * @property {number} [minlength]
+ * @property {object} [pattern]
+ * @property {object} [spellcheck]
+ * @property {boolean} [readonly]
+ * @property {number} [size]
+ * @property {boolean} [disabled]
  */
 
 /**
- * html input password
+ * Html input password
+ * @example
+ *    <input type="password" id="id_password" name="password" required>
  */
-class PasswordInput {
+class PasswordInput extends InputText {
   /**
    * @param {string} name
    * @param {Structure} structure
    */
   constructor(name, structure) {
-    this._name_ = name;
-
-    this.class = structure.class;
-    this.id = structure.id;
-    this.type = structure.type;
-    this.value = structure.value || '';
-    this.name = structure.name;
-    this.placeholder = structure.placeholder || '';
-    this.required = structure.required;
-    this.maxlength = structure.maxlength;
-    this.minlength = structure.minlength;
-    this.pattern = structure.pattern;
-    this.spellcheck = structure.spellcheck;
-    this.readonly = structure.readonly;
-    this.size = structure.size;
-    this.disabled = structure.disabled;
-
-    this.htmlAttrs = ['class', 'id', 'name', 'maxlength', 'minlength',
-      'pattern', 'placeholder', 'spellcheck', 'readonly', 'size', 'required',
-      'disabled'];
+    super(name, structure);
   }
 
   /**
    * @return {string}
    */
   get tag() {
-    return '<input type="password"' +
-      this.attrs() + `value="${this.value}"` + '>';
-  }
-
-  /**
-   * @return {string}
-   */
-  attrs() {
-    const attr = new AttributeBuilder(this);
-    const htmlAttributes = attr.build().join(' ');
-
-    // space in front of attrs
-    return htmlAttributes ? ' ' + htmlAttributes + ' ' : ' ';
-  }
-
-  /**
-   * @param {string} value
-   */
-  setValue(value) {
-    if (value) this.value = value;
+    const attr = new AttributeBuilder(Object.create(this));
+    return `<input type="password" ${attr.toString()}>`;
   }
 }
 

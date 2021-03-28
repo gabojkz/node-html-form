@@ -43,7 +43,7 @@ function parser(inputName, rawInputStruct) {
     indeterminate: false,
     accept: undefined,
     capture: false,
-    multiple: true,
+    multiple: undefined,
   };
 
   return Object.assign({}, DEFAULTS, rawInputStruct);

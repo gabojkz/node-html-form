@@ -3,8 +3,7 @@ const AttributeBuilder = require('../core/attr_builder');
  * @typedef Structure
  * @property {string} [id]
  * @property {Array.<string>} [class]
- * @property {string} [type]
- * @property {string} [value]
+ * @property {string} value
  * @property {string} [name]
  * @property {boolean} [required]
  * @property {boolean} [checked]
@@ -13,26 +12,29 @@ const AttributeBuilder = require('../core/attr_builder');
  */
 
 /**
- * html input password
+ * Single html input checkbox
+ * @example
+ *    <input type="checkbox" id="id_scales" value="scale" name="scales" checked>
  */
 class CheckboxInput {
   /**
-   * @param {string} name
+   * @param {string} name - form structure key name
    * @param {Structure} structure
    */
   constructor(name, structure) {
     this._name_ = name;
+    this.name = structure.name;
     this.id = structure.id;
     this.class = structure.class;
-    this.type = structure.type;
-    this.value = structure.value || '';
-    this.name = structure.name;
-    this.checked = structure.checked || '';
+    this.checked = structure.checked;
     this.required = structure.required;
     this.indeterminate = structure.indeterminate;
     this.disabled = structure.disabled;
 
-    this.htmlAttrs = ['class', 'id', 'name', 'value', 'checked', 'required',
+    // set default value
+    this.value = !structure.value ? name : structure.value;
+
+    this.htmlAttrs = ['id', 'class', 'name', 'value', 'checked', 'required',
       'indeterminate', 'disabled'];
   }
 
@@ -40,25 +42,15 @@ class CheckboxInput {
    * @return {string}
    */
   get tag() {
-    return '<input type="checkbox"' + this.attrs() + '>';
+    const attrs = new AttributeBuilder(Object.create(this));
+    return `<input type="checkbox" ${ attrs.toString() } >`;
   }
 
   /**
-   * @return {string}
+   * acticate checkbox
    */
-  attrs() {
-    const attr = new AttributeBuilder(this);
-    const htmlAttributes = attr.build().join(' ');
-
-    // space in front of attrs
-    return htmlAttributes ? ' ' + htmlAttributes : ' ';
-  }
-
-  /**
-   * @param {string} value
-   */
-  setValue(value) {
-    if (value) this.checked = true;
+  setChecked() {
+    this.checked = true;
   }
 }
 

@@ -11,10 +11,8 @@ const FileInput = require('../inputs/file_input');
 const EmailInput = require('../inputs/email_input');
 const PhoneInput = require('../inputs/phone_input');
 const RangeInput = require('../inputs/range_input');
-const SelectMultiple = require('../inputs/select_multiple_input');
 const UrlInput = require('../inputs/url_input');
 const NumberInput = require('../inputs/number_input');
-const RadioMultipleInput = require('../inputs/radio_multiple_input');
 
 /** @type {Object.<string, object>} */
 const INPUTS = {
@@ -28,10 +26,8 @@ const INPUTS = {
   'email': EmailInput,
   'phone': PhoneInput,
   'range': RangeInput,
-  'selectMultiple': SelectMultiple,
   'url': UrlInput,
   'number': NumberInput,
-  'radioMultiple': RadioMultipleInput,
 };
 
 /**
