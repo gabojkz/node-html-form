@@ -110,14 +110,12 @@ class OptionNode {
  * @return {Array<OptionNode|OptionGroupNode>}
  */
 function recursiveOptions(name, options) {
-  
-  return options.map(function(opt) 
-  { 
+  return options.map(function(opt) {
     if (typeof opt === 'object' && 'items' in opt) {
-      return new OptionGroupNode(opt.group, recursiveOptions(name, opt.items))
+      return new OptionGroupNode(opt.group, recursiveOptions(name, opt.items));
     }
-    
-    let option = {}
+
+    let option = {};
     if (typeof opt === 'string') {
       option.name = opt;
       option.value = opt;
@@ -128,7 +126,7 @@ function recursiveOptions(name, options) {
     }
 
     return new OptionNode(name, option);
-  });  
+  });
 }
 
 /**
